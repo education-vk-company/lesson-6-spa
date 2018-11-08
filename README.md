@@ -45,4 +45,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Полезные ссылки
 HOC (High Order Component) -> https://reactjs.org/docs/higher-order-components.html
+
 React Router -> https://github.com/ReactTraining/react-router
