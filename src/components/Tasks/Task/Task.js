@@ -7,7 +7,7 @@ const task = ({task, changeTaskStatus, match}) => {
     <div className={classes.TaskContainer}>
       <input id={task.id} onChange={changeTaskStatus} type='checkbox' value={task.isFinished}/>
       <label htmlFor={task.id}><div>{task.text}</div></label>
-      <Link to={`${match.path}/task/${task.id}`}>К задаче</Link>
+      <Link to={`${match.path}/${task.id}`}>К задаче</Link>
     </div>
   )
 };

@@ -7,6 +7,9 @@ const header = () => (
       <Link to=''>Главная</Link>
     </li>
     <li>
+      <Link to='/task'>Задачи</Link>
+    </li>
+    <li>
       <Link to='/about'>О компании</Link>
     </li>
   </ul>
