@@ -5,7 +5,7 @@ import Task from './Task/Task'
 const tasks = (props) => {
   let taskList = props.tasks.map(task => {
       return (
-        <Task key={task.id} task={task}/>
+        <Task key={task.id} task={task} changeTaskStatus={() => props.changeTaskStatus(task.id, task)}/>
       )
     }
   );
