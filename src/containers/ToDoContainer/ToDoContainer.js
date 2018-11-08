@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import Tasks from '../../components/Tasks/Tasks'
+import { Route } from 'react-router-dom';
+import TaskPage from '../../components/Tasks/TaskPage/TaskPage';
 class ToDoContainer extends Component {
   state = {
-    tasks: this.createTasks()
+    tasks: ToDoContainer.createTasks()
   };
 
-  createTasks() {
+  constructor(props) {
+    super(props)
+  }
+
+  static createTasks() {
     return new Array(15).fill(null).map((item, index) => {
       return {
         id: index,
@@ -31,7 +37,13 @@ class ToDoContainer extends Component {
   };
 
   render() {
-    return <Tasks tasks={this.state.tasks} changeTaskStatus={(id, task) => this.changeTaskStatus(id, task)}/>
+    console.log(this.props);
+    return (
+      <div>
+        <Tasks tasks={this.state.tasks} changeTaskStatus={(id, task) => this.changeTaskStatus(id, task)}/>
+        <Route path='/task/:id' exact component={TaskPage} />
+      </div>
+    )
   }
 }
 export default ToDoContainer;

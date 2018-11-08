@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Router>
         <Layout>
-          <Route path='' exact component={ToDoContainer} />
+          <Route path='' component={ToDoContainer} />
         </Layout>
       </Router>
     );
