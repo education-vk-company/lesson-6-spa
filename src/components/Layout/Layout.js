@@ -1,12 +1,11 @@
 import React from 'react';
 import Aux from '../../hoc/Aux/Aux'
 import classes from './Layout.module.css';
+import Header from './../Header/Header'
 
 const layout = ({children}) => (
   <Aux>
-    <div>
-      Header
-    </div>
+    <Header />
     <main className={classes.Content}>
       {children}
     </main>
