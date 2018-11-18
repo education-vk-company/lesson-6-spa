@@ -3,6 +3,7 @@ import Input from '../../components/Input/Input';
 
 class FeedbackContainer extends Component {
     state = {
+        formIsValid: false,
         feedbackForm: {
             name: {
                 elementType: 'input',
@@ -73,14 +74,20 @@ class FeedbackContainer extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         console.log(updatedFormElement);
         updatedForm[key] = updatedFormElement;
+
+        const formIsValid = Object.keys(updatedForm).every(key => {
+            return updatedForm[key].valid
+        });
+
         this.setState({
-            feedbackForm: updatedForm
+            feedbackForm: updatedForm,
+            formIsValid
         });
     };
 
     feedbackHandler = (event) => {
         event.preventDefault();
-        console.log(event);
+        console.log(this.state);
 
         const formData = Object.keys(this.state.feedbackForm).reduce((res, key) => {
             res[key] = this.state.feedbackForm[key].value;
@@ -107,7 +114,7 @@ class FeedbackContainer extends Component {
         return (
             <form onSubmit={this.feedbackHandler}>
                 {inputs}
-                <button type="submit">
+                <button disabled={!this.state.formIsValid} type="submit">
                     Отправить
                 </button>
             </form>
