@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Tasks from '../../components/Tasks/Tasks'
 import { Route } from 'react-router-dom';
 import TaskPage from '../../components/Tasks/TaskPage/TaskPage';
+import {connect} from "react-redux";
+import { Redirect } from 'react-router-dom';
+
+
 class ToDoContainer extends Component {
   state = {
     tasks: ToDoContainer.createTasks()
@@ -38,12 +42,25 @@ class ToDoContainer extends Component {
 
   render() {
     console.log(this.props);
+    let authRedirect = null;
+    if(!this.props.isAuthenticated) {
+      authRedirect = <Redirect to="/"/>
+    }
+
     return (
       <div>
         <Tasks tasks={this.state.tasks} changeTaskStatus={(id, task) => this.changeTaskStatus(id, task)}/>
         <Route path='/task/:id' exact component={TaskPage} />
+          {authRedirect}
       </div>
     )
   }
 }
-export default ToDoContainer;
+
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null,
+    }
+};
+
+export default connect(mapStateToProps)(ToDoContainer);

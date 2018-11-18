@@ -104,4 +104,11 @@ const mapDispatchToProps = dispatch =>{
     }
 };
 
-export default connect(null, mapDispatchToProps)(Auth);
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
