@@ -44,6 +44,7 @@ export const auth = (email, password) => {
         dispatch(authStart());
         axios.post('login', {email, password})
             .then(res => {
+                localStorage.setItem('token', res.data.token);
                 dispatch(authSuccess(res.data.token));
             }).catch(err => {
                 console.log(err);
@@ -51,3 +52,12 @@ export const auth = (email, password) => {
             });
     }
 };
+
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+        if(token) {
+            dispatch(authSuccess(token));
+        }
+    }
+}

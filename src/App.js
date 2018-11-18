@@ -4,12 +4,17 @@ import ToDoContainer from './containers/ToDoContainer/ToDoContainer';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import FeedbackContainer from './containers/FeedbackContainer/FeedbackContainer';
 import Auth from './containers/Auth/Auth';
+import {connect} from "react-redux";
+import * as actions from './store/actions';
 
 const About = () => (
   <div>AboutPage</div>
 );
 
 class App extends Component {
+  componentDidMount() {
+     this.props.onTryAutoLogin();
+  }
   render() {
     return (
       <Router>
@@ -24,4 +29,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const initMapDispatchToProps = dispatch => {
+  return {
+    onTryAutoLogin: () => dispatch(actions.authCheckState()),
+  }
+};
+
+export default connect(null, initMapDispatchToProps)(App);
