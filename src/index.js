@@ -6,13 +6,15 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import authReducer from './store/reducers/auth';
+
+const rootReducer = combineReducers({
+    auth: authReducer
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const reducer = (state, action) => {
-    return state
-};
-const store = createStore(reducer, composeEnhancers(
+const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
