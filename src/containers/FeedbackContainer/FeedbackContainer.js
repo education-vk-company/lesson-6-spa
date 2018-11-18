@@ -45,6 +45,17 @@ class FeedbackContainer extends Component {
         });
     };
 
+    feedbackHandler = (event) => {
+        event.preventDefault();
+        console.log(event);
+
+        const formData = Object.keys(this.state.feedbackForm).reduce((res, key) => {
+            res[key] = this.state.feedbackForm[key].value;
+            return res;
+        }, {});
+        console.log(formData);
+    };
+
 
     render () {
         const formElements = {...this.state.feedbackForm};
@@ -59,8 +70,11 @@ class FeedbackContainer extends Component {
             />
         });
         return (
-            <form>
+            <form onSubmit={this.feedbackHandler}>
                 {inputs}
+                <button type="submit">
+                    Отправить
+                </button>
             </form>
         );
     }
