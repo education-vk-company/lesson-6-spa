@@ -10,7 +10,11 @@ class FeedbackContainer extends Component {
                     type: 'text',
                     placeholder: 'Ваше имя'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                },
+                valid: false,
             },
             email: {
                 elementType: 'input',
@@ -18,7 +22,11 @@ class FeedbackContainer extends Component {
                     type: 'email',
                     placeholder: 'Ваша почта'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
             },
             phone: {
                 elementType: 'input',
@@ -26,9 +34,28 @@ class FeedbackContainer extends Component {
                     type: 'text',
                     placeholder: 'Ваш телефон'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 3,
+                },
+                valid: false,
             }
         }
+    };
+
+    checkValidity(value, rules) {
+        let isValid = true;
+
+        if(rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+        }
+
+        return isValid;
     };
 
     inputChangedHandler = (event, key) => {
@@ -39,6 +66,8 @@ class FeedbackContainer extends Component {
             ...updatedForm[key],
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        console.log(updatedFormElement);
         updatedForm[key] = updatedFormElement;
         this.setState({
             feedbackForm: updatedForm
