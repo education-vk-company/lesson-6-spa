@@ -72,7 +72,6 @@ class FeedbackContainer extends Component {
         updatedFormElement.value = event.target.value;
         updatedFormElement.touched = true;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        console.log(updatedFormElement);
         updatedForm[key] = updatedFormElement;
 
         const formIsValid = Object.keys(updatedForm).every(key => {
