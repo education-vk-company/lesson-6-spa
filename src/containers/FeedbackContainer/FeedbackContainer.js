@@ -15,6 +15,7 @@ class FeedbackContainer extends Component {
                     required: true,
                 },
                 valid: false,
+                touched: false,
             },
             email: {
                 elementType: 'input',
@@ -27,6 +28,7 @@ class FeedbackContainer extends Component {
                     required: true
                 },
                 valid: false,
+                touched: false,
             },
             phone: {
                 elementType: 'input',
@@ -40,6 +42,7 @@ class FeedbackContainer extends Component {
                     minLength: 3,
                 },
                 valid: false,
+                touched: false,
             }
         }
     };
@@ -66,6 +69,7 @@ class FeedbackContainer extends Component {
             ...updatedForm[key],
         };
         updatedFormElement.value = event.target.value;
+        updatedFormElement.touched = true;
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         console.log(updatedFormElement);
         updatedForm[key] = updatedFormElement;
@@ -95,6 +99,8 @@ class FeedbackContainer extends Component {
                 elementType={inputElement.elementType}
                 elementConfig={inputElement.elementConfig}
                 value={inputElement.value}
+                invalid={!inputElement.valid}
+                touched={inputElement.touched}
                 changed={(event)=> this.inputChangedHandler(event, key)}
             />
         });
