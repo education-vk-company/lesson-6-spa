@@ -31,6 +31,20 @@ class FeedbackContainer extends Component {
         }
     };
 
+    inputChangedHandler = (event, key) => {
+        const updatedForm = {
+            ...this.state.feedbackForm
+        };
+        const updatedFormElement = {
+            ...updatedForm[key],
+        };
+        updatedFormElement.value = event.target.value;
+        updatedForm[key] = updatedFormElement;
+        this.setState({
+            feedbackForm: updatedForm
+        });
+    };
+
 
     render () {
         const formElements = {...this.state.feedbackForm};
@@ -41,6 +55,7 @@ class FeedbackContainer extends Component {
                 elementType={inputElement.elementType}
                 elementConfig={inputElement.elementConfig}
                 value={inputElement.value}
+                changed={(event)=> this.inputChangedHandler(event, key)}
             />
         });
         return (
