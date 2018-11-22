@@ -1,13 +1,22 @@
 import React from 'react';
+import classes from './Input.module.css';
 
 const input = (props) => {
   let inputElement;
+  let inputElementClasses = [classes.InputElement];
+
+  if(props.invalid && props.touched) {
+    inputElementClasses.push(classes.Invalid);
+  }
+
   switch (props.elementType) {
     case 'input':
       inputElement = <input
+        className={inputElementClasses.join(' ')}
         value={props.value}
         onChange={props.changed}
-        placeholder={props.placeholder}/>;
+        {...props.elementConfig}
+      />;
       break;
     case 'textarea':
       inputElement = <textarea placeholder={props.placeholder}>
@@ -15,13 +24,16 @@ const input = (props) => {
       break;
     default:
       inputElement = <input
+        className={inputElementClasses.join(' ')}
         value={props.value}
         onChange={props.changed}
-        placeholder={props.placeholder}/>;
+        {...props.elementConfig}
+      />;
       break;
   }
   return (
-    <div>
+    <div className={classes.Input}>
+      <div className={classes.Label}> {props.label} </div>
       {inputElement}
     </div>
   );

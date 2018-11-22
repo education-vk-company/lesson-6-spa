@@ -5,14 +5,58 @@ class Auth extends Component {
   state = {
     loginForm: {
       login: {
+        label: 'Введите логин',
         elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Логин'
+        },
         value: '',
+        valid: false,
+        touched: false,
+        validation: {
+          isRequired: true,
+          minLength: 6,
+        }
       },
       password: {
         elementType: 'input',
-        value: '123',
+        value: '',
+        label: 'Введите пароль',
+        elementConfig: {
+          type: 'password',
+          placeholder: 'Пароль'
+        },
+        touched: false,
+        valid: false,
+        validation: {
+          isRequired: true,
+        }
       }
+    },
+    valid: false,
+  };
+
+  handleFormConfirm = (event) => {
+    event.preventDefault();
+    const result = Object
+      .keys(this.state.loginForm)
+      .reduce((res, key) => {
+        res[key] = this.state.loginForm[key].value;
+        return res
+      }, {});
+    console.log(result);
+  };
+
+  checkValidity = (value, rule) => {
+    let isValid = true;
+    if (rule.isRequired) {
+      isValid = value.trim()!== '';
     }
+    if (rule.minLength) {
+      isValid = value.trim().length >= rule.minLength && isValid;
+    }
+    return isValid;
   };
 
   handleInput = (event, key) => {
@@ -23,11 +67,18 @@ class Auth extends Component {
       ...this.state.loginForm[key],
     };
 
+    inputData.touched = true;
     inputData.value = event.target.value;
-    
+    inputData.valid = this.checkValidity(inputData.value, inputData.validation);
+
+    const invalid = Object.keys(newFormData).some(key => {
+        return !newFormData[key].valid;
+    });
+
     newFormData[key] = inputData;
     this.setState({
-      loginForm: newFormData
+      loginForm: newFormData,
+      valid: !invalid,
     });
   };
 
@@ -39,15 +90,21 @@ class Auth extends Component {
         return <Input
           key={key}
           elementType={element.elementType}
+          elementConfig={element.elementConfig}
           value={element.value}
+          valid={element.valid}
+          label={element.label}
+          touched={element.touched}
+          invalid={!element.valid}
           changed={(event) => this.handleInput(event, key)}
-          placeholder="Введите логин" />
+          />
       });
 
     return (
-      <div>
+      <form onSubmit={this.handleFormConfirm}>
         {inputs}
-      </div>
+        <button disabled={!this.state.valid} type='submit'>Войти</button>
+      </form>
     );
   }
 }
