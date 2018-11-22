@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Tasks from '../../components/Tasks/Tasks'
 import { Route } from 'react-router-dom';
 import TaskPage from '../../components/Tasks/TaskPage/TaskPage';
+import { Redirect } from 'react-router-dom';
 class ToDoContainer extends Component {
   state = {
     tasks: ToDoContainer.createTasks()

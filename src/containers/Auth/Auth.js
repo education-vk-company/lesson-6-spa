@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Input from './../../components/Input/Input';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions'
+import { Redirect } from 'react-router-dom';
 
 class Auth extends Component {
   state = {
@@ -46,6 +49,7 @@ class Auth extends Component {
         return res
       }, {});
     console.log(result);
+    this.props.onAuth(result.login, result.password);
   };
 
   checkValidity = (value, rule) => {
@@ -100,13 +104,37 @@ class Auth extends Component {
           />
       });
 
+    let redirect = null;
+    if(this.props.token) {
+      redirect = <Redirect to='/about'/>
+    }
+
+    if(this.props.error) {
+
+    }
+
     return (
       <form onSubmit={this.handleFormConfirm}>
         {inputs}
         <button disabled={!this.state.valid} type='submit'>Войти</button>
+        {this.props.token}
+        {redirect}
       </form>
     );
   }
 }
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => {
+  return  {
+    onAuth: (login, password) => dispatch(actions.auth(login, password))
+  }
+};
+
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token,
+  }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
