@@ -12,6 +12,9 @@ const header = () => (
     <li>
       <Link to='/about'>О компании</Link>
     </li>
+    <li>
+      <Link to='/login'>Войти</Link>
+    </li>
   </ul>
 );
 
