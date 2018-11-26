@@ -6,10 +6,8 @@ import FeedbackContainer from './containers/FeedbackContainer/FeedbackContainer'
 import Auth from './containers/Auth/Auth';
 import {connect} from "react-redux";
 import * as actions from './store/actions';
-import Centrifuge from 'centrifuge';
-import jwt from 'jsonwebtoken';
-import jsSHA from 'jssha';
 import Socket from './containers/Socket/Socket';
+import Centrifuge from './containers/Centrifuge/Centrifuge';
 
 const About = () => (
   <div>AboutPage</div>
@@ -53,6 +51,7 @@ class App extends Component {
                 {routes}
             </Router>
             <Socket/>
+            <Centrifuge/>
         </div>
 
     );
