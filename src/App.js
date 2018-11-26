@@ -6,6 +6,10 @@ import FeedbackContainer from './containers/FeedbackContainer/FeedbackContainer'
 import Auth from './containers/Auth/Auth';
 import {connect} from "react-redux";
 import * as actions from './store/actions';
+import Centrifuge from 'centrifuge';
+import jwt from 'jsonwebtoken';
+import jsSHA from 'jssha';
+import Socket from './containers/Socket/Socket';
 
 const About = () => (
   <div>AboutPage</div>
@@ -13,7 +17,10 @@ const About = () => (
 
 class App extends Component {
   componentDidMount() {
-     this.props.onTryAutoLogin();
+      console.log('did mount');
+      this.props.onTryAutoLogin();
+
+
   }
   render() {
     let routes = (
@@ -41,9 +48,13 @@ class App extends Component {
     }
 
     return (
-      <Router>
-          {routes}
-      </Router>
+        <div>
+            <Router>
+                {routes}
+            </Router>
+            <Socket/>
+        </div>
+
     );
   }
 }
